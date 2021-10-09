@@ -10,11 +10,9 @@ export default new Vuex.Store({
   mutations: {
     authenticate(state, payload){
       state.jwt_auth = payload.jwt_auth
-      state.jwt_refresh = payload.jwt_refresh
     },
     clear_auth(state){
       state.jwt_auth = ''
-      state.jwt_refresh = ''
     },
     set_jwt_auth(state, jwt_auth){
       state.jwt_auth = jwt_auth
@@ -22,7 +20,7 @@ export default new Vuex.Store({
   },
   getters:{
     user_authenticated(state){
-      return state.jwt_auth && state.jwt_refresh
+      return state.jwt_auth !=  ''
     },
     auth_token(state){
       return state.jwt_auth

@@ -29,24 +29,23 @@ export default {
   data: () => ({
     valid: true,
     loading: false,
-    email: "",
+    email: "user@email.com",
     emailRules: [
       (v) => !!v || "E-mail is required",
       (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
     ],
     show1: false,
-    password: "",
+    password: "123456",
   }),
   methods: {
     signin() {
       this.loading = true;
-      const user = { user: { email: this.email, password: this.password } };
+      const user = { email: this.email, password: this.password };
       this.$http.main
-        .post("/sign_in", user)
+        .post("/users/sign_in", user)
         .then((response) => {
           this.$store.commit("authenticate", {
-            jwt_auth: response.data.access_token,
-            jwt_refresh: response.data.refresh_token,
+            jwt_auth: response.data.jwt
           });
           if (this.$store.getters.user_authenticated) {
             this.$router.push({ path: "/painel" });
