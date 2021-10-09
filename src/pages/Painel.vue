@@ -1,34 +1,21 @@
+
 <template>
-  <div>
-    <h1>Painel</h1>
-  </div>
+  <v-container>
+    <v-row no-gutters>
+      <v-col cols="12" sm="4" ></v-col>
+      <v-col cols="12" sm="4" ></v-col>
+      <v-col cols="12" sm="4" >
+        <Historico/>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
+import Historico from '../components/historico_transacao.vue'
 export default {
   components: {
-  },
-  data: () => ({
-    operations: '',
-  }),
-  methods: {
-    get_operations: function () {
-      this.operations = '';
-      this.$http.auth
-        .get("/operations")
-        .then((response) => {
-          console.log(response.data)
-          this.operations = response.data.operations
-        })
-    },
-  },
-  computed: {
-    today: function () {
-      return new Date(Date.now());
-    },
-  },
-  beforeMount() {
-    this.get_operations();
+    Historico
   },
 };
 </script>
