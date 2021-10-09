@@ -1,16 +1,17 @@
 import Vue from 'vue'
 import App from './App.vue'
-import Vuex from 'vuex'
 import VueAxios from 'vue-axios'
 import router from './router'
 import store from './store'
-import { mainAxiosInstance } from './backend/axios'
-import './quasar'
+import { mainAxiosInstance, authAxiosInstance } from './backend/axios'
+import vuetify from './plugins/vuetify'
+import DatetimePicker from 'vuetify-datetime-picker'
 
-Vue.use(Vuex)
+Vue.use(DatetimePicker)
 
 Vue.use(VueAxios, {
-  main: mainAxiosInstance
+  main: mainAxiosInstance,
+  auth: authAxiosInstance
 })
 
 Vue.config.productionTip = false
@@ -18,5 +19,6 @@ Vue.config.productionTip = false
 new Vue({
   router,
   store,
-  render: h => h(App),
+  vuetify,
+  render: h => h(App)
 }).$mount('#app')
