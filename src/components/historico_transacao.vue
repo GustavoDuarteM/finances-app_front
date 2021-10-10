@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto">
+  <v-card class="mx-auto overflow-y-auto"  style="height: 550px" >
     <v-container class="text-center">
       <h3>Histórico de Transação</h3>
     </v-container>
