@@ -18,7 +18,14 @@ const authAxiosInstance = axios.create({
   }
 })
 
-authAxiosInstance.interceptors.request.use(config => {
+const authBaseAxiosInstance = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
+
+authBaseAxiosInstance.interceptors.request.use(config => {
   config.headers = {
     ...config.headers,
     'Authorization': `Bearer ${store.getters.auth_token}`
@@ -26,4 +33,4 @@ authAxiosInstance.interceptors.request.use(config => {
   return config
 })
 
-export { mainAxiosInstance, authAxiosInstance }
+export { mainAxiosInstance, authAxiosInstance, authBaseAxiosInstance }

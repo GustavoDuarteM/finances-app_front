@@ -3,7 +3,7 @@ import App from './App.vue'
 import VueAxios from 'vue-axios'
 import router from './router'
 import store from './store'
-import { mainAxiosInstance, authAxiosInstance } from './backend/axios'
+import { mainAxiosInstance, authAxiosInstance, authBaseAxiosInstance } from './backend/axios'
 import vuetify from './plugins/vuetify'
 import DatetimePicker from 'vuetify-datetime-picker'
 
@@ -11,7 +11,8 @@ Vue.use(DatetimePicker)
 
 Vue.use(VueAxios, {
   main: mainAxiosInstance,
-  auth: authAxiosInstance
+  auth: authAxiosInstance,
+  authBase: authBaseAxiosInstance
 })
 
 Vue.config.productionTip = false
