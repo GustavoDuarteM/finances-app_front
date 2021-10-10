@@ -46,12 +46,12 @@ export default {
               const date = new Date(operation['date_of_operation'])
               const formated_date = date.toLocaleDateString("pt-BR", { timeZone: "UTC" }).substr(0, 5)
               const valor = operation['value']
-              const valor_formatado = valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+              const operation_flow = operation['operation_flow'] == 'inflow' ? '+ ' : "- "
+              const valor_formatado = operation_flow + valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
               return { 
                 id: operation['id'], 
                 date: formated_date, 
                 name: operation['name'],
-                operation_flow: operation['operation_flow'],
                 value: valor_formatado
               }
             })
