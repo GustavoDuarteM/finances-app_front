@@ -25,6 +25,14 @@ const authBaseAxiosInstance = axios.create({
   }
 })
 
+authAxiosInstance.interceptors.request.use(config => {
+  config.headers = {
+    ...config.headers,
+    'Authorization': `Bearer ${store.getters.auth_token}`
+  }
+  return config
+})
+
 authBaseAxiosInstance.interceptors.request.use(config => {
   config.headers = {
     ...config.headers,
