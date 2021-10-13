@@ -3,9 +3,17 @@
     <v-card-actions>
       <v-list-item>
         <v-list-item-content>
-          <v-btn text> Adicionar Ganho </v-btn>
-          <v-btn text> Adicionar Gasto </v-btn>
-          <v-btn text @click='sign_out'> Sair </v-btn>
+          <Operacao
+            form_title="Novo Ganho"
+            btn_title="Adicionar Ganho"
+            operation_flow="inflow"
+          />
+          <Operacao
+            form_title="Novo Gasto"
+            btn_title="Adicionar Gasto"
+            operation_flow="outflow"
+          />
+          <v-btn text @click="sign_out"> Sair </v-btn>
         </v-list-item-content>
       </v-list-item>
     </v-card-actions>
@@ -13,14 +21,18 @@
 </template>
 
 <script>
+import Operacao from "../components/form_operaçao.vue";
 export default {
-   methods: {
+  components: {
+    Operacao,
+  },
+  methods: {
     sign_out: function () {
       this.$http.authBase.delete("/users/sign_in").then(() => {
         this.$store.commit("clear_auth");
         this.$router.push({ path: "/" });
       });
-    },
+    }
   },
 };
 </script>

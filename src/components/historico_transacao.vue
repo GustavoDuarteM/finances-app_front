@@ -38,8 +38,9 @@ export default {
   }),
   methods: {
     get_operations: function () {
+      const date_today =  new Date().toLocaleDateString("pt-BR", {timeZone: "UTC" }).split('/').reverse().join('-')
       this.monthly_operations = [];
-      this.$http.auth.get("/operations").then((response) => {
+      this.$http.auth.get("/operations", {start_in: date_today} ).then((response) => {
         for (let operation_response in response.data) {
           let operations = response.data[operation_response].map(
             (operation) => {
