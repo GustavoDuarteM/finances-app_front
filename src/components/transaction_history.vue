@@ -41,9 +41,10 @@
 </template>
 
 <script>
-import InfinitLoad from "../mixins/infinit_load";
+import infinitLoad from "../mixins/infinit_load";
+import formatters from "../mixins/formatters";
 export default {
-  mixins: [InfinitLoad],
+  mixins: [infinitLoad, formatters],
   data: () => ({
     monthly_operations: [],
     page: 1,
@@ -58,12 +59,12 @@ export default {
           let operations = response.data[operation_response].map(
             (operation) => {
               return {
-                id: operation["id"],
-                date: this.formated_date(operation["date_of_operation"]),
-                name: operation["name"],
+                id: operation.id,
+                date: this.formated_date(operation.date_of_operation),
+                name: operation.name,
                 value: this.formated_value(
-                  operation["value"],
-                  operation["operation_flow"]
+                  operation.value,
+                  operation.operation_flow
                 ),
               };
             }
@@ -85,26 +86,13 @@ export default {
           );
 
           if (duplacate_key) {
-            this.monthly_operations[index].operations.push(operations);
+            this.monthly_operations[index].operations.concat(operations);
           } else {
             this.monthly_operations.push(monthly_operation);
           }
         }
       });
       this.loading_operation = false;
-    },
-    formated_value: function (value, operation_flow) {
-      const flow = operation_flow == "inflow" ? "+ " : "- ";
-      return (
-        flow +
-        value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
-      );
-    },
-    formated_date: function (date) {
-      const parsed_date = new Date(date);
-      return parsed_date
-        .toLocaleDateString("pt-BR", { timeZone: "UTC" })
-        .substr(0, 5);
     },
   },
   beforeMount() {
