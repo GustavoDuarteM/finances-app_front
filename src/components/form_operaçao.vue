@@ -7,41 +7,45 @@
       </v-btn>
     </template>
     <v-card>
-      <v-card-title>
-        <span class="text-h5">{{ form_title }}</span>
-      </v-card-title>
-      <v-card-text>
-        <v-text-field
-          label="Nome"
-          required
-          v-model="name"
-          :rules="[rules.required]"
-        ></v-text-field>
-        <v-text-field
-          label="Valor"
-          required
-          v-model="value"
-          :rules="[rules.required]"
-          type="number"
-          :prepend-icon="value_icon[operation_flow]"
-        ></v-text-field>
-        <v-text-field
-          v-model="date_of_operation"
-          required
-          label="Quando"
-          hint="DD/MM/YYYY"
-          v-mask="'##/##/####'"
-          prepend-icon="mdi-calendar"
-          :rules="[rules.required, rules.date]"
-        ></v-text-field>
-      </v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" text @click="dialog = false">
-          Fechar
-        </v-btn>
-        <v-btn color="blue darken-1" text @click="save_operation"> Salvar </v-btn>
-      </v-card-actions>
+      <v-form ref="form">
+        <v-card-title>
+          <span class="text-h5">{{ form_title }}</span>
+        </v-card-title>
+        <v-card-text>
+          <v-text-field
+            label="Nome"
+            required
+            v-model="name"
+            :rules="[rules.required]"
+          ></v-text-field>
+          <v-text-field
+            label="Valor"
+            required
+            v-model="value"
+            :rules="[rules.required]"
+            type="number"
+            :prepend-icon="value_icon[operation_flow]"
+          ></v-text-field>
+          <v-text-field
+            v-model="date_of_operation"
+            required
+            label="Quando"
+            hint="DD/MM/YYYY"
+            v-mask="'##/##/####'"
+            prepend-icon="mdi-calendar"
+            :rules="[rules.required, rules.date]"
+          ></v-text-field>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="dialog = false">
+            Fechar
+          </v-btn>
+          <v-btn color="blue darken-1" text @click="save_operation">
+            Salvar
+          </v-btn>
+        </v-card-actions>
+      </v-form>
     </v-card>
   </v-dialog>
 </template>
@@ -89,23 +93,34 @@ export default {
         this.new_operation();
       }
 
-      this.$root.$emit('UpdateOperationList');
+      this.$root.$emit("UpdateOperationList");
     },
     new_operation: function () {
-      const formated_date = this.date_of_operation.split('/').reverse().join('-')
-      const params = {  name: this.name, value: this.value, date_of_operation: formated_date, operation_flow: this.operation_flow };
+      const formated_date = this.date_of_operation
+        .split("/")
+        .reverse()
+        .join("-");
+      const params = {
+        name: this.name,
+        value: this.value,
+        date_of_operation: formated_date,
+        operation_flow: this.operation_flow,
+      };
       this.$http.auth.post("/operations", params).then(() => {
         this.clear_form();
         this.dialog = false;
       });
     },
     update_operation() {
-      const formated_date = this.date_of_operation.split('/').reverse().join('-')
+      const formated_date = this.date_of_operation
+        .split("/")
+        .reverse()
+        .join("-");
       const params = {
-          id: this.operation.id,
-          name: this.name,
-          value: this.value,
-          date_of_operation: formated_date
+        id: this.operation.id,
+        name: this.name,
+        value: this.value,
+        date_of_operation: formated_date,
       };
       this.$http.auth.put("/operations", params).then(() => {
         this.clear_form();
@@ -132,7 +147,7 @@ export default {
   watch: {
     dialog(val) {
       if (!val) {
-        this.clear_form();
+        this.$refs.form.reset();
       }
     },
   },
