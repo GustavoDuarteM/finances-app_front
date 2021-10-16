@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar  dense >
+  <v-toolbar dense >
       <v-btn text plain to='/'>
         <v-toolbar-title >FinacesApp</v-toolbar-title>
       </v-btn>

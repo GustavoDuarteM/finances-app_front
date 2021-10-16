@@ -34,48 +34,58 @@
 export default {
   components: {},
   data: () => ({
-    monthly_operations: "",
+    monthly_operations: [],
   }),
   methods: {
-    get_operations: function () {
-      const date_today =  new Date().toLocaleDateString("pt-BR", {timeZone: "UTC" }).split('/').reverse().join('-')
-      this.monthly_operations = [];
-      this.$http.auth.get("/operations", {start_in: date_today} ).then((response) => {
-        for (let operation_response in response.data) {
-          let operations = response.data[operation_response].map(
-            (operation) => {
-              const date = new Date(operation["date_of_operation"]);
-              const formated_date = date
-                .toLocaleDateString("pt-BR", { timeZone: "UTC" })
-                .substr(0, 5);
-              const valor = operation["value"];
-              const operation_flow =
-                operation["operation_flow"] == "inflow" ? "+ " : "- ";
-              const valor_formatado =
-                operation_flow +
-                valor.toLocaleString("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                });
-              return {
-                id: operation["id"],
-                date: formated_date,
-                name: operation["name"],
-                value: valor_formatado,
-              };
-            }
-          );
-          this.monthly_operations.push({
-            date: operation_response,
-            operations: operations,
-          });
-        }
-      });
+    get_operations: function() {
+      let monthly_operations = []
+      this.$http.auth
+        .get("/operations")
+        .then((response) => {
+          for (let operation_response in response.data) {
+            let operations = response.data[operation_response].map(
+              (operation) => {
+                return {
+                  id: operation["id"],
+                  date: this.formated_date(operation["date_of_operation"]),
+                  name: operation["name"],
+                  value: this.formated_value(
+                    operation["value"],
+                    operation["operation_flow"]
+                  ),
+                };
+              }
+            );
+            monthly_operations.push({
+              date: operation_response,
+              operations: operations,
+            });
+          }
+        });
+      return monthly_operations;
+    },
+    formated_value: function (value, operation_flow) {
+      const flow = operation_flow == "inflow" ? "+ " : "- ";
+      return (
+        flow +
+        value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
+      );
+    },
+    formated_date: function (date) {
+      const parsed_date = new Date(date);
+      return parsed_date
+        .toLocaleDateString("pt-BR", { timeZone: "UTC" })
+        .substr(0, 5);
     },
   },
   beforeMount() {
-    this.get_operations();
+    this.monthly_operations = this.get_operations();
   },
+  created (){
+    this.$root.$on('UpdateOperationList', () => {
+      this.monthly_operations = this.get_operations()
+    })
+  }
 };
 </script>
 

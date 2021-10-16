@@ -40,7 +40,7 @@
         <v-btn color="blue darken-1" text @click="dialog = false">
           Fechar
         </v-btn>
-        <v-btn color="blue darken-1" text @click="save_patient"> Salvar </v-btn>
+        <v-btn color="blue darken-1" text @click="save_operation"> Salvar </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -82,12 +82,14 @@ export default {
     value_icon: { inflow: "mdi-plus", outflow: "mdi-minus" },
   }),
   methods: {
-    save_patient: function () {
+    save_operation: function () {
       if (this.patient) {
         this.update_operation();
       } else {
         this.new_operation();
       }
+
+      this.$root.$emit('UpdateOperationList');
     },
     new_operation: function () {
       const formated_date = this.date_of_operation.split('/').reverse().join('-')
@@ -129,7 +131,6 @@ export default {
 
   watch: {
     dialog(val) {
-      console.log(val);
       if (!val) {
         this.clear_form();
       }
