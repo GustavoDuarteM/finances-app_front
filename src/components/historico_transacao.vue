@@ -31,7 +31,10 @@
         </div>
       </div>
       <div class="text-center" v-if="loading_operation">
-        <v-progress-circular indeterminate color="primary"></v-progress-circular>
+        <v-progress-circular
+          indeterminate
+          color="primary"
+        ></v-progress-circular>
       </div>
     </v-container>
   </v-card>
@@ -44,15 +47,14 @@ export default {
   data: () => ({
     monthly_operations: [],
     page: 1,
-    loading_operation: false
+    loading_operation: false,
   }),
   methods: {
     get_operations: function () {
-      this.loading_operation = true
-      const params = { params: {page: this.page }}
+      this.loading_operation = true;
+      const params = { params: { page: this.page } };
       this.$http.auth.get("/operations", params).then((response) => {
         for (let operation_response in response.data) {
-          
           let operations = response.data[operation_response].map(
             (operation) => {
               return {
@@ -66,28 +68,31 @@ export default {
               };
             }
           );
-          const  monthly_operation = {
+          const monthly_operation = {
             date: operation_response,
             operations: operations,
-          }
+          };
 
-          let index = ''
-          const duplacate_key =  this.monthly_operations.reduce((accum, curr, i)=>{    
-              if(curr.date == operation_response){
-                index = i
+          let index = "";
+          const duplacate_key = this.monthly_operations.reduce(
+            (accum, curr, i) => {
+              if (curr.date == operation_response) {
+                index = i;
               }
-              return (accum || (curr.date == operation_response))
-          }, false)
+              return accum || curr.date == operation_response;
+            },
+            false
+          );
 
-          if(duplacate_key){
-            console.log('duplacate_key',duplacate_key)
-            this.monthly_operations[index].operations.push(operations)
-          }else{
-            this.monthly_operations.push(monthly_operation)
+          if (duplacate_key) {
+            console.log("duplacate_key", duplacate_key);
+            this.monthly_operations[index].operations.push(operations);
+          } else {
+            this.monthly_operations.push(monthly_operation);
           }
         }
       });
-      this.loading_operation = false
+      this.loading_operation = false;
     },
     formated_value: function (value, operation_flow) {
       const flow = operation_flow == "inflow" ? "+ " : "- ";
@@ -101,7 +106,7 @@ export default {
       return parsed_date
         .toLocaleDateString("pt-BR", { timeZone: "UTC" })
         .substr(0, 5);
-    }
+    },
   },
   beforeMount() {
     this.get_operations();
@@ -112,7 +117,7 @@ export default {
   created() {
     this.$root.$on("UpdateOperationList", () => {
       this.page = 1;
-      this.monthly_operations = []
+      this.monthly_operations = [];
       this.get_operations();
     });
   },
@@ -120,7 +125,7 @@ export default {
     bottom(bottom) {
       if (bottom) {
         this.page += 1;
-        this.get_operations()
+        this.get_operations();
       }
     },
   },

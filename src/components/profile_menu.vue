@@ -32,7 +32,7 @@ export default {
         this.$store.commit("clear_auth");
         this.$router.push({ path: "/" });
       });
-    }
+    },
   },
 };
 </script>

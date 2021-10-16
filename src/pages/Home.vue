@@ -45,7 +45,7 @@ export default {
         .post("/users/sign_in", user)
         .then((response) => {
           this.$store.commit("authenticate", {
-            jwt_auth: response.data.jwt
+            jwt_auth: response.data.jwt,
           });
           if (this.$store.getters.user_authenticated) {
             this.$router.push({ path: "/painel" });
