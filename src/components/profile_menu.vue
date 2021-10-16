@@ -3,16 +3,17 @@
     <v-card-actions>
       <v-list-item>
         <v-list-item-content>
-          <Operacao
+          <Operation
             form_title="Novo Ganho"
             btn_title="Adicionar Ganho"
             operation_flow="inflow"
           />
-          <Operacao
+          <Operation
             form_title="Novo Gasto"
             btn_title="Adicionar Gasto"
             operation_flow="outflow"
           />
+          <v-btn text to="/operacoes"> Editar Transação </v-btn>
           <v-btn text @click="sign_out"> Sair </v-btn>
         </v-list-item-content>
       </v-list-item>
@@ -21,10 +22,10 @@
 </template>
 
 <script>
-import Operacao from "../components/form_operaçao.vue";
+import Operation from "./form_operation.vue";
 export default {
   components: {
-    Operacao,
+    Operation,
   },
   methods: {
     sign_out: function () {

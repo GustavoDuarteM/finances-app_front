@@ -2,23 +2,23 @@
 <template>
   <v-container>
     <v-row no-gutters>
-      <v-col cols="12" sm="4">
+      <v-col cols="12" sm="3">
         <Menu />
       </v-col>
       <v-col cols="12" sm="4"></v-col>
-      <v-col cols="12" sm="4">
-        <Historico />
+      <v-col cols="12" sm="5">
+        <TransactionHistory />
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import Historico from "../components/historico_transacao.vue";
+import TransactionHistory from "../components/transaction_history.vue";
 import Menu from "../components/profile_menu.vue";
 export default {
   components: {
-    Historico,
+    TransactionHistory,
     Menu,
   },
 };

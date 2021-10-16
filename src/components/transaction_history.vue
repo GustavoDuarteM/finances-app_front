@@ -20,10 +20,10 @@
               <v-col cols="2" class="text-left">
                 {{ operation.date }}
               </v-col>
-              <v-col cols="6" class="text-left">
+              <v-col cols="5" class="text-left">
                 {{ operation.name }}
               </v-col>
-              <v-col class="text-right">
+              <v-col cols="5" class="text-right">
                 {{ operation.value }}
               </v-col>
             </v-row>
@@ -85,7 +85,6 @@ export default {
           );
 
           if (duplacate_key) {
-            console.log("duplacate_key", duplacate_key);
             this.monthly_operations[index].operations.push(operations);
           } else {
             this.monthly_operations.push(monthly_operation);
