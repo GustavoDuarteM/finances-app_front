@@ -2,9 +2,9 @@
 <template>
   <v-dialog v-model="dialog" persistent width="80%">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn text v-bind="attrs" v-on="on">
-        {{ btn_title }}
-      </v-btn>
+      <div style="display: grid" v-bind="attrs" v-on="on">
+        <slot> </slot>
+      </div>
     </template>
     <v-card>
       <v-form ref="form">
@@ -53,9 +53,6 @@
 <script>
 export default {
   props: {
-    btn_title: {
-      required: true,
-    },
     operation: {
       default: "",
     },

@@ -3,16 +3,12 @@
     <v-card-actions>
       <v-list-item>
         <v-list-item-content>
-          <Operation
-            form_title="Novo Ganho"
-            btn_title="Adicionar Ganho"
-            operation_flow="inflow"
-          />
-          <Operation
-            form_title="Novo Gasto"
-            btn_title="Adicionar Gasto"
-            operation_flow="outflow"
-          />
+          <Operation form_title="Novo Ganho" operation_flow="inflow">
+            <v-btn text> Adicionar Ganho </v-btn>
+          </Operation>
+          <Operation form_title="Novo Gasto" operation_flow="outflow">
+            <v-btn text> Adicionar Gasto </v-btn>
+          </Operation>
           <v-btn text to="/operacoes"> Editar Transação </v-btn>
           <v-btn text @click="sign_out"> Sair </v-btn>
         </v-list-item-content>
