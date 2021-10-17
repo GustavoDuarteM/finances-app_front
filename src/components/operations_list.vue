@@ -1,8 +1,5 @@
 <template>
   <v-card>
-    <v-container>
-      <h1>Transações </h1>
-    </v-container>
     <v-container
       id="operations_container"
       class="mx-auto overflow-y-auto"
