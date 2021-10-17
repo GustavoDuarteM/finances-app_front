@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-container class="text-center">
-      <h3>Histórico de Transação</h3>
+      <h3>Histórico de Transações</h3>
     </v-container>
     <v-container
       id="operations_container"

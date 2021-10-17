@@ -9,7 +9,7 @@
           <Operation form_title="Novo Gasto" operation_flow="outflow">
             <v-btn text> Adicionar Gasto </v-btn>
           </Operation>
-          <v-btn text to="/operacoes"> Editar Transação </v-btn>
+          <v-btn text to="/operacoes"> Editar Transações </v-btn>
           <v-btn text @click="sign_out"> Sair </v-btn>
         </v-list-item-content>
       </v-list-item>
