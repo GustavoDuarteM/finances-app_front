@@ -15,16 +15,30 @@
           </v-chip>
         </div>
         <div v-for="operation in operations.operations" :key="operation.id">
-          <div class="py-1 px-5">
+          <div class="py-1 px-1">
             <v-row no-gutters>
-              <v-col cols="2" class="text-left">
+              <v-col cols="1" class="d-flex align-center justify-left">
+                <v-tooltip left>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon
+                      :class="operation.operation_flow"
+                      v-bind="attrs"
+                      v-on="on"
+                    >
+                      {{ icon_operation_flow(operation.operation_flow) }}
+                    </v-icon>
+                  </template>
+                  <span>{{ operation.operation_flow_locate }}</span>
+                </v-tooltip>
+              </v-col>
+              <v-col cols="2" class="d-flex align-center justify-center">
                 {{ operation.date }}
               </v-col>
               <v-col cols="5" class="text-left">
                 {{ operation.name }}
               </v-col>
-              <v-col cols="5" class="text-right">
-                {{ operation.value }}
+              <v-col cols="4" class="d-flex align-center justify-end">
+                <span>{{ operation.value }}</span>
               </v-col>
             </v-row>
           </div>
@@ -53,7 +67,7 @@ export default {
   methods: {
     get_operations: function () {
       this.loading_operation = true;
-      const params = { params: { page: this.page , group_by_date: true} };
+      const params = { params: { page: this.page, group_by_date: true } };
       this.$http.auth.get("/operations", params).then((response) => {
         for (let operation_response in response.data) {
           let operations = response.data[operation_response].map(
@@ -62,6 +76,10 @@ export default {
                 id: operation.id,
                 date: this.formated_date_sm(operation.date_of_operation),
                 name: operation.name,
+                operation_flow: operation.operation_flow,
+                operation_flow_locate: this.locate_operation_flow(
+                  operation.operation_flow
+                ),
                 value: this.formated_value(
                   operation.value,
                   operation.operation_flow
@@ -86,14 +104,21 @@ export default {
           );
 
           if (duplacate_key) {
-            const all_operations = this.monthly_operations[index].operations.concat(operations);
-            this.monthly_operations[index].operations = all_operations
+            const all_operations =
+              this.monthly_operations[index].operations.concat(operations);
+            this.monthly_operations[index].operations = all_operations;
           } else {
             this.monthly_operations.push(monthly_operation);
           }
         }
       });
       this.loading_operation = false;
+    },
+    locate_operation_flow: function (operation_flow) {
+      return operation_flow == "outflow" ? "Gasto" : "Ganho";
+    },
+    icon_operation_flow: function (operation_flow) {
+      return operation_flow == "outflow" ? "mdi-minus" : "mdi-plus";
     },
   },
   beforeMount() {
@@ -121,4 +146,16 @@ export default {
 </script>
 
 <style>
+.inflow {
+  background-color: #e7ffd9;
+  border-radius: 50%;
+  padding: 1px;
+  color: #91c971 !important;
+}
+.outflow {
+  background-color: #ffede9;
+  border-radius: 50%;
+  padding: 1px;
+  color: #e9967a !important;
+}
 </style>
