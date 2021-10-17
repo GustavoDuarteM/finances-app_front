@@ -104,7 +104,6 @@ export default {
         operation_flow: this.operation_flow,
       };
       this.$http.auth.post("/operations", params).then(() => {
-        this.clear_form();
         this.dialog = false;
       });
     },
