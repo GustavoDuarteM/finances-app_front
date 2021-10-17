@@ -67,7 +67,9 @@ export default {
   methods: {
     get_operations: function () {
       this.loading_operation = true;
-      const params = { params: { page: this.page, group_by_date: true } };
+      const params = {
+        params: { page: this.page, group_by_date: true, current_month: true },
+      };
       this.$http.auth.get("/operations", params).then((response) => {
         for (let operation_response in response.data) {
           let operations = response.data[operation_response].map(

@@ -22,7 +22,7 @@
               operation_flow="outflow"
               class="ml-15"
             >
-              <v-btn color="success"> Adicionar Gasto </v-btn>
+              <v-btn dark color="purple"> Adicionar Gasto </v-btn>
             </OperationForm>
           </v-container>
         </v-container>

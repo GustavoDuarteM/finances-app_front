@@ -5,40 +5,54 @@
       class="mx-auto overflow-y-auto"
       style="height: 550px"
     >
-      <v-list-item v-for="operation in operations" :key="operation.id">
-        <v-list-item-content>
-          <v-row no-gutters>
-            <v-col cols="2" class="text-left">
-              {{ operation.formated_date }}
-            </v-col>
-            <v-col cols="4" class="text-left">
-              {{ operation.name }}
-            </v-col>
-            <v-col cols="4" class="text-right">
-              {{ operation.formated_value }}
-            </v-col>
-            <v-col cols="2" class="text-right">
-              <Operation
-                form_title="Editar"
-                :operation_flow="operation.operation_flow"
-                :operation="operation"
-              >
-                <v-btn text> Editar </v-btn>
-              </Operation>
-              <v-btn text @click="delete_operation(operation.id)">
-                deletar
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-list-item-content>
-      </v-list-item>
+      <div v-for="operation in operations" :key="operation.id">
+        <v-list-item>
+          <v-list-item-content>
+            <v-row no-gutters>
+              <v-col cols="1" class="d-flex align-center justify-left">
+                <v-tooltip left>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon
+                      :class="operation.operation_flow"
+                      v-bind="attrs"
+                      v-on="on"
+                    >
+                      {{ icon_operation_flow(operation.operation_flow) }}
+                    </v-icon>
+                  </template>
+                  <span>{{ operation.operation_flow_locate }}</span>
+                </v-tooltip>
+              </v-col>
+              <v-col cols="1" class="d-flex align-center justify-left">
+                {{ operation.formated_date }}
+              </v-col>
+              <v-col cols="4" class="pl-5 d-flex align-center justify-left">
+                {{ operation.name }}
+              </v-col>
+              <v-col cols="3" class="d-flex align-center justify-left">
+                {{ operation.formated_value }}
+              </v-col>
+              <v-col cols="3" class="d-flex justify-space-around">
+                <Operation
+                  form_title="Editar"
+                  :operation_flow="operation.operation_flow"
+                  :operation="operation"
+                >
+                  <v-btn dark color="teal"> Editar </v-btn>
+                </Operation>
+                <v-btn @click="delete_operation(operation.id)" color="error">
+                  deletar
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-list-item-content>
+        </v-list-item>
+        <v-divider></v-divider>
+      </div>
     </v-container>
     <v-container class="text-center" v-if="loading_operation">
-      <v-progress-circular
-        indeterminate
-        color="primary"
-      ></v-progress-circular>
-  </v-container>
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
+    </v-container>
   </v-card>
 </template>
 
@@ -68,6 +82,9 @@ export default {
             formated_date: this.formated_date(operation.date_of_operation),
             name: operation.name,
             operation_flow: operation.operation_flow,
+            operation_flow_locate: this.locate_operation_flow(
+              operation.operation_flow
+            ),
             value: operation.value,
             formated_value: this.formated_value(
               operation.value,
@@ -86,6 +103,12 @@ export default {
     delete_operation: function (id) {
       this.$http.auth.delete(`/operations/${id}`).then(() => {});
       this.$root.$emit("UpdateOperationList");
+    },
+    locate_operation_flow: function (operation_flow) {
+      return operation_flow == "outflow" ? "Gasto" : "Ganho";
+    },
+    icon_operation_flow: function (operation_flow) {
+      return operation_flow == "outflow" ? "mdi-minus" : "mdi-plus";
     },
   },
   beforeMount() {
