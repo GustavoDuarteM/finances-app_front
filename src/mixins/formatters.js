@@ -7,11 +7,16 @@ const formatters = {
         value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
       );
     },
-    formated_date: function (date) {
+    formated_date_sm: function (date) {
       const parsed_date = new Date(date);
       return parsed_date
         .toLocaleDateString("pt-BR", { timeZone: "UTC" })
         .substr(0, 5);
+    },
+    formated_date: function (date) {
+      const parsed_date = new Date(date);
+      return parsed_date
+        .toLocaleDateString("pt-BR", { timeZone: "UTC" })
     },
   },
 }

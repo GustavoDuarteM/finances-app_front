@@ -30,12 +30,12 @@
           </div>
         </div>
       </div>
-      <div class="text-center" v-if="loading_operation">
+      <v-container class="text-center" v-if="loading_operation">
         <v-progress-circular
           indeterminate
           color="primary"
         ></v-progress-circular>
-      </div>
+      </v-container>
     </v-container>
   </v-card>
 </template>
@@ -60,7 +60,7 @@ export default {
             (operation) => {
               return {
                 id: operation.id,
-                date: this.formated_date(operation.date_of_operation),
+                date: this.formated_date_sm(operation.date_of_operation),
                 name: operation.name,
                 value: this.formated_value(
                   operation.value,
@@ -86,7 +86,8 @@ export default {
           );
 
           if (duplacate_key) {
-            this.monthly_operations[index].operations.concat(operations);
+            const all_operations = this.monthly_operations[index].operations.concat(operations);
+            this.monthly_operations[index].operations = all_operations
           } else {
             this.monthly_operations.push(monthly_operation);
           }

@@ -84,7 +84,7 @@ export default {
   }),
   methods: {
     save_operation: function () {
-      if (this.patient) {
+      if (this.operation) {
         this.update_operation();
       } else {
         this.new_operation();
@@ -114,13 +114,11 @@ export default {
         .reverse()
         .join("-");
       const params = {
-        id: this.operation.id,
         name: this.name,
         value: this.value,
         date_of_operation: formated_date,
       };
-      this.$http.auth.put("/operations", params).then(() => {
-        this.clear_form();
+      this.$http.auth.put(`/operations/${this.operation.id}`, params).then(() => {
         this.dialog = false;
       });
     },
@@ -128,19 +126,11 @@ export default {
       if (this.operation) {
         this.name = this.operation.name;
         this.value = this.operation.value;
-        this.date_of_operation = this.operation.date_of_operation;
+        const date_of_operation = new Date(this.operation.date_of_operation)
+        this.date_of_operation = date_of_operation.toLocaleDateString("pt-BR", { timeZone: "UTC",})
       }
     },
-    clear_form: function () {
-      this.name = "";
-      this.value = "";
-      this.date_of_operation = new Date().toLocaleDateString("pt-BR", {
-        timeZone: "UTC",
-      });
-    },
-    date_validation: function () {},
   },
-
   watch: {
     dialog(val) {
       if (!val) {
@@ -148,7 +138,6 @@ export default {
       }
     },
   },
-
   beforeMount() {
     this.init_operation();
   },

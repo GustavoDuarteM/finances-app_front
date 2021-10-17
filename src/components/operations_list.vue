@@ -1,33 +1,58 @@
 <template>
-  <v-container
-    id="operations_container"
-    class="mx-auto overflow-y-auto"
-    style="height: 550px"
-  >
-    <v-card>
+  <v-card>
+    <v-container>
+      <h1>Transações </h1>
+    </v-container>
+    <v-container
+      id="operations_container"
+      class="mx-auto overflow-y-auto"
+      style="height: 550px"
+    >
       <v-list-item v-for="operation in operations" :key="operation.id">
         <v-list-item-content>
           <v-row no-gutters>
             <v-col cols="2" class="text-left">
-              {{ operation.date }}
+              {{ operation.formated_date }}
             </v-col>
-            <v-col cols="5" class="text-left">
+            <v-col cols="4" class="text-left">
               {{ operation.name }}
             </v-col>
-            <v-col cols="5" class="text-right">
-              {{ operation.value }}
+            <v-col cols="4" class="text-right">
+              {{ operation.formated_value }}
+            </v-col>
+            <v-col cols="2" class="text-right">
+              <Operation
+                form_title="Editar"
+                :operation_flow="operation.operation_flow"
+                :operation="operation"
+              >
+                <v-btn text> Editar </v-btn>
+              </Operation>
+              <v-btn text @click="delete_operation(operation.id)">
+                deletar
+              </v-btn>
             </v-col>
           </v-row>
         </v-list-item-content>
       </v-list-item>
-    </v-card>
+    </v-container>
+    <v-container class="text-center" v-if="loading_operation">
+      <v-progress-circular
+        indeterminate
+        color="primary"
+      ></v-progress-circular>
   </v-container>
+  </v-card>
 </template>
 
 <script>
 import infinitLoad from "../mixins/infinit_load";
 import formatters from "../mixins/formatters";
+import Operation from "./form_operation.vue";
 export default {
+  components: {
+    Operation,
+  },
   mixins: [infinitLoad, formatters],
   data: () => ({
     operations: new Array(),
@@ -39,27 +64,31 @@ export default {
       this.loading_operation = true;
       const params = { params: { page: this.page } };
       this.$http.auth.get("/operations", params).then((response) => {
-        
-        const operation = response.data.map(operation => {
-          return { 
+        const operation = response.data.map((operation) => {
+          return {
             id: operation.id,
-            date: this.formated_date(operation.date_of_operation),
+            date_of_operation: operation.date_of_operation,
+            formated_date: this.formated_date(operation.date_of_operation),
             name: operation.name,
-            value: this.formated_value(
+            operation_flow: operation.operation_flow,
+            value: operation.value,
+            formated_value: this.formated_value(
               operation.value,
               operation.operation_flow
-            )
-          }
+            ),
+          };
         });
-        if(this.operations.length == 0){
-          this.operations = operation
-        }else{
-          this.operations = this.operations.concat(operation)
-          console.log(this.operations)
+        if (this.operations.length == 0) {
+          this.operations = operation;
+        } else {
+          this.operations = this.operations.concat(operation);
         }
-        
-
       });
+      this.loading_operation = false;
+    },
+    delete_operation: function (id) {
+      this.$http.auth.delete(`/operations/${id}`).then(() => {});
+      this.$root.$emit("UpdateOperationList");
     },
   },
   beforeMount() {
