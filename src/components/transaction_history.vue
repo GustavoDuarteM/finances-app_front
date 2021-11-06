@@ -62,7 +62,7 @@ export default {
   data: () => ({
     monthly_operations: [],
     page: 1,
-    loading_operation: false,
+    loading_operation: true,
   }),
   methods: {
     get_operations: function () {
@@ -113,8 +113,9 @@ export default {
             this.monthly_operations.push(monthly_operation);
           }
         }
+      }).finally(()=>{
+        this.loading_operation = false;
       });
-      this.loading_operation = false;
     },
     locate_operation_flow: function (operation_flow) {
       return operation_flow == "outflow" ? "Gasto" : "Ganho";

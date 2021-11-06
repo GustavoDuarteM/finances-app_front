@@ -77,7 +77,7 @@ export default {
   data: () => ({
     operations: new Array(),
     page: 1,
-    loading_operation: false,
+    loading_operation: true,
     name: ''
   }),
   methods: {
@@ -107,8 +107,9 @@ export default {
         } else {
           this.operations = this.operations.concat(operation);
         }
+      }).finally(()=>{
+        this.loading_operation = false;
       });
-      this.loading_operation = false;
     },
     delete_operation: function (id) {
       this.$http.auth.delete(`/operations/${id}`).then(() => {});

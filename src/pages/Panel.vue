@@ -18,7 +18,7 @@
 <script>
 import TransactionHistory from "../components/transaction_history.vue";
 import Menu from "../components/profile_menu.vue";
-import Total from "../components/total_operaions.vue"
+import Total from "../components/total_operations.vue"
 export default {
   components: {
     TransactionHistory,
