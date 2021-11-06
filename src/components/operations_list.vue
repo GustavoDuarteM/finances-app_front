@@ -1,5 +1,14 @@
 <template>
   <v-card>
+    <v-container>
+      <v-spacer></v-spacer>
+      <v-text-field
+        label="Buscar Operações por nome"
+        append-icon="mdi-magnify"
+        v-model="name"
+      ></v-text-field>
+      <v-spacer></v-spacer>
+    </v-container>
     <v-container
       id="operations_container"
       class="mx-auto overflow-y-auto"
@@ -69,11 +78,12 @@ export default {
     operations: new Array(),
     page: 1,
     loading_operation: false,
+    name: ''
   }),
   methods: {
     get_operations: function () {
       this.loading_operation = true;
-      const params = { params: { page: this.page } };
+      const params = { params: { page: this.page, name: this.name} };
       this.$http.auth.get("/operations", params).then((response) => {
         const operation = response.data.map((operation) => {
           return {
@@ -128,6 +138,15 @@ export default {
     bottom(bottom) {
       if (bottom) {
         this.page += 1;
+        this.get_operations();
+      }
+    },
+    name(val) {
+      if (val.length > 3) {
+        this.operations= new Array();
+        this.get_operations();
+      } else if (val.length == 0) {
+        this.operations= new Array();
         this.get_operations();
       }
     },
