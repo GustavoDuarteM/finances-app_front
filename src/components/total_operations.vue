@@ -3,17 +3,17 @@
     <v-container class="text-center">
       <h3> {{months[this.total_operations.month] }} </h3>
     </v-container>
-    <v-container class="d-flex justify-sm-space-between">
+    <v-container class="d-flex justify-space-between">
       <h5> Ganhos Totais </h5>
       <span>{{ this.formated_value(this.total_operations.inflow,'inflow') }}</span>
     </v-container>
     <v-divider></v-divider>
-    <v-container class="d-flex justify-sm-space-between">
+    <v-container class="d-flex justify-space-between">
       <h5> Gastos Totais </h5>
       <span>{{ this.formated_value(this.total_operations.outflow,'outflow') }}</span>
     </v-container >
     <v-divider></v-divider>
-    <v-container class="d-flex justify-sm-space-between">
+    <v-container class="d-flex justify-space-between">
       <h5> Saldo </h5>
       <span>{{ this.formated_value(this.total_operations.total,this.total_operations.total_flow ) }}</span>
     </v-container>
