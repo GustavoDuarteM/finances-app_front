@@ -84,12 +84,15 @@ export default {
     operations: new Array(),
     page: 1,
     loading_operation: true,
-    name: ''
   }),
   methods: {
     get_operations: function () {
       this.loading_operation = true;
-      const params = { params: { page: this.page, name: this.name} };
+      const params = { params: { 
+        page: this.page, 
+        start_in: this.format_date_to_request(this.firstDay)
+        } 
+      };
       this.$http.auth.get("/operations", params).then((response) => {
         const operation = response.data.map((operation) => {
           return {
@@ -147,7 +150,17 @@ export default {
       const total = this.total_inflow - this.total_outflow 
       const operation_flow = total >= 0 ? 'inflow' : 'outflow'
       return this.formated_value(total, operation_flow)
-    }
+    },
+    current_date: function () {
+      return new Date();
+    },
+    firstDay: function () {
+      return new Date(
+        this.current_date.getFullYear(),
+        this.current_date.getMonth(),
+        1
+      );
+    },
   },
   beforeMount() {
     this.get_operations();
@@ -155,6 +168,21 @@ export default {
   mounted() {
     this.set_containet("operations_container");
   },
+  created() {
+    this.$root.$on("UpdateOperationList", () => {
+      this.page = 1;
+      this.operations = [];
+      this.get_operations();
+    });
+  },
+  watch: {
+    bottom(bottom) {
+      if (bottom) {
+        this.page += 1;
+        this.get_operations();
+      }
+    },
+  }
 }
 </script>
 

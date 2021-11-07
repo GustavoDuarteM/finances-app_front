@@ -18,6 +18,9 @@ const formatters = {
       return parsed_date
         .toLocaleDateString("pt-BR", { timeZone: "UTC" })
     },
+    format_date_to_request: function (date) {
+      return date.toISOString().substr(0, 10);
+    },
   },
 }
 
