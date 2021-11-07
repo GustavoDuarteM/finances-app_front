@@ -5,18 +5,15 @@
       /
       <v-btn to="/painel" color="primary" text disabled> Transações </v-btn>
     </v-container>
-    <v-card>
-      <v-container class="d-flex align-center">
-        <v-container>
-          <h1>Transações</h1>
-        </v-container>
-        <v-container class="d-flex justify-end">
-          <v-container>
+    <v-card class="ma-3">
+      <v-row>
+        <v-col md="6" sm="12" >
+          <h1 class="pa-3">Transações</h1>
+        </v-col>
+        <v-col md="6" sm="12" class="d-flex align-center justify-space-around">
             <OperationForm form_title="Novo Ganho" operation_flow="inflow">
               <v-btn color="primary"> Adicionar Ganho </v-btn>
             </OperationForm>
-          </v-container>
-          <v-container>
             <OperationForm
               form_title="Novo Gasto"
               operation_flow="outflow"
@@ -24,9 +21,8 @@
             >
               <v-btn dark color="purple"> Adicionar Gasto </v-btn>
             </OperationForm>
-          </v-container>
-        </v-container>
-      </v-container>
+        </v-col>
+      </v-row>
     </v-card>
 
     <v-container>

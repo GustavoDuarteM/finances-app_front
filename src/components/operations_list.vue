@@ -3,7 +3,8 @@
     <v-container>
       <v-spacer></v-spacer>
       <v-text-field
-        label="Buscar Operações por nome"
+        class="px-5 pt-2"
+        label="Buscar operações por nome"
         append-icon="mdi-magnify"
         v-model="name"
       ></v-text-field>
@@ -18,7 +19,7 @@
         <v-list-item>
           <v-list-item-content>
             <v-row no-gutters>
-              <v-col cols="1" class="d-flex align-center justify-left">
+              <v-col md="1" sm="1" class="d-flex align-center justify-left">
                 <v-tooltip left>
                   <template v-slot:activator="{ on, attrs }">
                     <v-icon
@@ -32,16 +33,16 @@
                   <span>{{ operation.operation_flow_locate }}</span>
                 </v-tooltip>
               </v-col>
-              <v-col cols="1" class="d-flex align-center justify-left">
+              <v-col md="1" sm="2" xs="1" class="d-flex align-center justify-left">
                 {{ operation.formated_date }}
               </v-col>
-              <v-col cols="4" class="pl-5 d-flex align-center justify-left">
+              <v-col md="4" sm="4" xs="5" class="pl-5 d-flex align-center justify-left">
                 {{ operation.name }}
               </v-col>
-              <v-col cols="3" class="d-flex align-center justify-left">
+              <v-col md="3" sm="3" class="d-flex align-center justify-left">
                 {{ operation.formated_value }}
               </v-col>
-              <v-col cols="3" class="d-flex justify-space-around">
+              <v-col md="3" class="d-flex justify-space-around">
                 <Operation
                   form_title="Editar"
                   :operation_flow="operation.operation_flow"
