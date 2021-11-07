@@ -9,8 +9,8 @@
       locale="pt-BR"
       full-width
       elevation="5"
-      :min="this.firstDay.toISOString().substr(0, 10)"
-      :max="this.lastDay.toISOString().substr(0, 10)"
+      :min="this.format_date_to_request(this.firstDay)"
+      :max="this.format_date_to_request(this.lastDay)"
       v-else
     ></v-date-picker>
   </v-card>
@@ -49,11 +49,6 @@ export default {
         .finally(() => {
           this.loading_operation = false;
         });
-    },
-    format_date_to_request: function (date) {
-      date = date.toLocaleDateString("pt-BR", { timeZone: "UTC" });
-      const splitted_date = date.split("/");
-      return `${splitted_date[1]}-${splitted_date[0]}-${splitted_date[2]}`;
     },
     events: function (date) {
       const red = this.find_operation_by_flow(date, "outflow")
