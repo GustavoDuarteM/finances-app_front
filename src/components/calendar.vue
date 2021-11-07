@@ -29,8 +29,6 @@ export default {
   mixins: [formatters],
   methods: {
     get_operations: function () {
-      console.log("this.firstDay", this.firstDay);
-      console.log("lastDay", this.lastDay);
       this.loading_operation = true;
       const params = {
         params: {
@@ -38,7 +36,6 @@ export default {
           end_in: this.format_date_to_request(this.lastDay),
         },
       };
-      console.log(params);
       this.$http.auth
         .get("/operations", params)
         .then((response) => {
@@ -51,7 +48,6 @@ export default {
         })
         .finally(() => {
           this.loading_operation = false;
-          console.log(this.operations);
         });
     },
     format_date_to_request: function (date) {
