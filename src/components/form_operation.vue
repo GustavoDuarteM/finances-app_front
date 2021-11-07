@@ -2,7 +2,7 @@
 <template>
   <v-dialog v-model="dialog" persistent width="80%">
     <template v-slot:activator="{ on, attrs }">
-      <div style="display: grid" v-bind="attrs" v-on="on">
+      <div style="display: contents;" v-bind="attrs" v-on="on">
         <slot> </slot>
       </div>
     </template>

@@ -1,19 +1,14 @@
 <template>
-  <v-card>
-    <v-card-actions>
-      <v-list-item>
-        <v-list-item-content>
-          <Operation form_title="Novo Ganho" operation_flow="inflow">
-            <v-btn text> Adicionar Ganho </v-btn>
-          </Operation>
-          <Operation form_title="Novo Gasto" operation_flow="outflow">
-            <v-btn text> Adicionar Gasto </v-btn>
-          </Operation>
-          <v-btn text to="/operacoes"> Editar Transações </v-btn>
-          <v-btn text @click="sign_out"> Sair </v-btn>
-        </v-list-item-content>
-      </v-list-item>
-    </v-card-actions>
+  <v-card class="d-flex flex-column pa-3">
+    <Operation form_title="Novo Ganho" operation_flow="inflow">
+      <v-btn text> Adicionar Ganho </v-btn>
+    </Operation>
+    <Operation form_title="Novo Gasto" operation_flow="outflow">
+      <v-btn text> Adicionar Gasto </v-btn>
+    </Operation>
+    <v-btn text to="/operacoes"> Editar Transações </v-btn>
+    <v-btn text to="/orcamento"> Orçamento </v-btn>
+    <v-btn text @click="sign_out"> Sair </v-btn>
   </v-card>
 </template>
 
