@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../pages/Home'
 import Panel from '../pages/Panel'
+import Budget from '../pages/Budget'
 import Operations from '../pages/Operations'
 import store from '../store'
 
@@ -34,6 +35,17 @@ const routes = [
   {
     path: '/operacoes',
     component: Operations,
+    beforeEnter(to, from, next) {
+      if (store.getters.user_authenticated) {
+        next()
+      } else {
+        next(false)
+      }
+    }
+  },
+  {
+    path: '/orcamento',
+    component: Budget,
     beforeEnter(to, from, next) {
       if (store.getters.user_authenticated) {
         next()
