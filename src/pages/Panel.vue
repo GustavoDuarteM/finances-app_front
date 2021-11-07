@@ -7,6 +7,7 @@
       </v-col>
       <v-col cols="12" sm="4">
         <Total/>
+        <Calendar/>
       </v-col>
       <v-col cols="12" sm="5">
         <TransactionHistory />
@@ -19,11 +20,13 @@
 import TransactionHistory from "../components/transaction_history.vue";
 import Menu from "../components/profile_menu.vue";
 import Total from "../components/total_operations.vue"
+import Calendar from "../components/calendar.vue"
 export default {
   components: {
     TransactionHistory,
     Menu,
-    Total
+    Total,
+    Calendar
   },
 };
 </script>
